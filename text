@@ -1,50 +1,116 @@
- Play
-  1hr <!-- daily -->
-  Previous - 2hrs <!-- daily -->
-  10hrs <!-- weekly -->
-  Previous - 8hrs <!-- weekly -->
-  23hrs <!-- monthly -->
-  Previous - 29hrs <!-- monthly -->
+const gridContainer = document.querySelector('.grid-container');
 
-  Study
-  0hrs <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  4hrs <!-- weekly -->
-  Previous - 7hrs <!-- weekly -->
-  13hrs <!-- monthly -->
-  Previous - 19hrs <!-- monthly -->
+const daily = document.querySelector('.daily');
+const weekly = document.querySelector('.weekly');
+const monthly = document.querySelector('.monthly');
 
-  Exercise
-  1hr <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  4hrs <!-- weekly -->
-  Previous - 5hrs <!-- weekly -->
-  11hrs <!-- monthly -->
-  Previous - 18hrs <!-- monthly -->
+// Event Listeners
+daily.addEventListener('click', async () => {   
+    
+    
+    weekly.style.color = "hsl(235, 45%, 61%)";
+    daily.style.color = '#fff';
+    monthly.style.color = 'hsl(235, 45%, 61%)';
+    const response = await fetch('http://localhost:3000/users');
+    const data = await response.json();
+    
+    gridContainer.innerHTML = '';
 
-  Social
-  1hr <!-- daily -->
-  Previous - 3hrs <!-- daily -->
-  5hrs <!-- weekly -->
-  Previous - 10hrs <!-- weekly -->
-  21hrs <!-- monthly -->
-  Previous - 23hrs <!-- monthly -->
+    data.forEach(user => {
+        
+        gridContainer.innerHTML += `
+        <div class="first-block">
+          
+          <p class="work">${user.title}</p>
+          <img class="pontos" src="./images/icon-ellipsis.svg" alt="">
+          <h1 class="hours">${user.timeframes.daily.current}hrs</h1>
+          <p class="previous">Previous - ${user.timeframes.daily.previous}hrs</p>
+        
+        </div>
+        `
+    })
+});
 
-  Self Care
-  0hrs <!-- daily -->
-  Previous - 1hr <!-- daily -->
-  2hrs <!-- weekly -->
-  Previous - 2hrs <!-- weekly -->
-  7hrs <!-- monthly -->
-  Previous - 11hrs <!-- monthly -->
+weekly.addEventListener('click', async () => {
+    weekly.style.color = "#fff";
+    daily.style.color = 'hsl(235, 45%, 61%)';
+    monthly.style.color = 'hsl(235, 45%, 61%)';
+    
+    
+    console.log("click weekly")
+    const response = await fetch('http://localhost:3000/users');
+    const data = await response.json();
+    
+    gridContainer.innerHTML = '';
+
+    data.forEach(user => {
+        
+        gridContainer.innerHTML += `
+        <div class="first-block">
+          
+          <p class="work">${user.title}</p>
+          <img class="pontos" src="./images/icon-ellipsis.svg" alt="">
+          <h1 class="hours">${user.timeframes.weekly.current}hrs</h1>
+          <p class="previous">Previous - ${user.timeframes.weekly.previous}hrs</p>
+        
+        </div>
+        `
+    })
+    
+
+})
 
 
+monthly.addEventListener('click', async () => {
+    
+    weekly.style.color = "hsl(235, 45%, 61%)";
+    daily.style.color = 'hsl(235, 45%, 61%)';
+    monthly.style.color = '#fff';
+    const response = await fetch('http://localhost:3000/users');
+    const data = await response.json();
+    
+    gridContainer.innerHTML = '';
+
+    data.forEach(user => {
+        
+        gridContainer.innerHTML += `
+        <div class="first-block">
+          
+          <p class="work">${user.title}</p>
+          <img class="pontos" src="./images/icon-ellipsis.svg" alt="">
+          <h1 class="hours">${user.timeframes.monthly.current}hrs</h1>
+          <p class="previous">Previous - ${user.timeframes.monthly.previous}hrs</p>
+        
+        </div>
+        `
+    })
+        
+})
 
 
+//fetch 
+async function getfetch()  {
+    const response = await fetch('http://localhost:3000/users');
+    const data = await response.json();
+    console.log(data);
+    gridContainer.innerHTML = '';
 
-wortk
+    data.forEach(user => {
+        gridContainer.innerHTML += `
+        <div class="first-block">
+          
+          <p class="work">${user.title}</p>
+          <img class="pontos" src="./images/icon-ellipsis.svg" alt="">
+          <h1 class="hours">${user.timeframes.daily.current}hrs</h1>
+          <p class="previous">Previous - ${user.timeframes.daily.previous}hrs</p>
+        
+        </div>
+        `
+    })
+} 
 
-  32hrs <!-- weekly -->
-        Previous - 36hrs <!-- weekly -->
-        103hrs <!-- monthly -->
-        Previous - 128hrs <!-- monthly -->
+
+// funcao limpa grid
+
+
+getfetch()
